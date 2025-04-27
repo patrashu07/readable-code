@@ -7,13 +7,14 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class ConsoleOutputHandler {
+public class  ConsoleOutputHandler implements OutputHandler {
     public void showGameStartComments() {
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             System.out.println("지뢰찾기 게임 시작!");
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     }
 
+    @Override
     public  void showBoard(GameBoard board) {
         String joiningAlphabets = generateColAlphabets(board);
 
@@ -27,8 +28,8 @@ public class ConsoleOutputHandler {
         }
         System.out.println();
     }
-
-    private String generateColAlphabets(GameBoard board) {
+    @Override
+    public String generateColAlphabets(GameBoard board) {
         List<String> alphabets = IntStream.range(0, board.getColSize())
                     .mapToObj(index -> (char)('a'  + index))
                     .map(Object::toString)
@@ -36,28 +37,28 @@ public class ConsoleOutputHandler {
         String joiningAlphabets = String.join(" ",alphabets);
         return joiningAlphabets;
     }
-
-    public void printGameLossingComment() {
+    @Override
+    public void showGameLossingComment() {
         System.out.println("지뢰를 밟았습니다. GAME OVER!");
     }
-
-    public void printGameWinningComment() {
+    @Override
+    public void showGameWinningComment() {
         System.out.println("지뢰를 모두 찾았습니다. GAME CLEAR!");
     }
-
-    public void printCommentForSelectingCell() {
+    @Override
+    public void showCommentForSelectingCell() {
         System.out.println("선택할 좌표를 입력하세요. (예: a1)");
     }
-
-    public void printCommentForUserAction() {
+    @Override
+    public void showCommentForUserAction() {
         System.out.println("선택한 셀에 대한 행위를 선택하세요. (1: 오픈, 2: 깃발 꽂기)");
     }
-
-    public void printExceptionMessage(GameException e) {
+    @Override
+    public void showExceptionMessage(GameException e) {
         System.out.println(e.getMessage());
     }
-
-    public void printSimpleMessage(String s) {
+    @Override
+    public void showSimpleMessage(String s) {
         System.out.println(s);
 
     }
