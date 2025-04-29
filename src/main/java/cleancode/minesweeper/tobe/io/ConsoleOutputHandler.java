@@ -3,19 +3,16 @@ package cleancode.minesweeper.tobe.io;
 import cleancode.minesweeper.tobe.GameBoard;
 import cleancode.minesweeper.tobe.GameException;
 import cleancode.minesweeper.tobe.cell.CellSnapshot;
-import cleancode.minesweeper.tobe.cell.CellSnapshotStatus;
+import cleancode.minesweeper.tobe.io.sign.*;
 import cleancode.minesweeper.tobe.position.CellPosition;
 
 import java.util.List;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class ConsoleOutputHandler implements OutputHandler {
 
-    private static final String LAND_MINE_SIGN = "☼";
-    private static final String EMPTY_SIGN = "■";
-    private static final String FLAG_SIGN = "⚑";
-    private static final String UNCHECKED_SIGN = "□";
+
+    public static final CellSignFinder CELL_SIGN_FINDER = new CellSignFinder();
 
     public void showGameStartComments() {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -34,33 +31,13 @@ public class ConsoleOutputHandler implements OutputHandler {
                 CellPosition cellPosition = CellPosition.of(row, col);
 
                 CellSnapshot snapshot = board.getSnapshot(cellPosition);
-                String cellSing = decideCellSignFrom(snapshot);
+                //다형성을 이용하여 if문 제거
+                String cellSing = CellSignProvider.findCellSignFrom(snapshot);
                 System.out.print(cellSing + " ");
             }
             System.out.println();
         }
         System.out.println();
-    }
-
-    private String decideCellSignFrom(CellSnapshot snapshot) {
-        CellSnapshotStatus status = snapshot.getStatus();
-        if (status == CellSnapshotStatus.EMPTY) {
-            return EMPTY_SIGN;
-        }
-        if (status == CellSnapshotStatus.FLAG) {
-            return FLAG_SIGN;
-        }
-        if (status == CellSnapshotStatus.LAND_MINE) {
-            return LAND_MINE_SIGN;
-        }
-        if (status == CellSnapshotStatus.NUMBER) {
-            return String.valueOf(snapshot.getNearByLandMineCount());
-        }
-        if (status == CellSnapshotStatus.UNCHECKED) {
-            return UNCHECKED_SIGN;
-        }
-
-        throw new IllegalArgumentException("확인 할 수 없는 값입니다.");
     }
 
     @Override

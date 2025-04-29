@@ -1,8 +1,9 @@
 package cleancode.minesweeper.tobe;
 
+import cleancode.minesweeper.tobe.config.GameConfig;
 import cleancode.minesweeper.tobe.game.GameInitializable;
 import cleancode.minesweeper.tobe.game.GameRunnable;
-import cleancode.minesweeper.tobe.gamelevel.GameLevel;
+
 import cleancode.minesweeper.tobe.io.InputHandler;
 import cleancode.minesweeper.tobe.io.OutputHandler;
 import cleancode.minesweeper.tobe.position.CellPosition;
@@ -10,26 +11,23 @@ import cleancode.minesweeper.tobe.user.UserAction;
 
 public class MineSweeper implements GameInitializable, GameRunnable {
 
-    private  static final int BOARD_ROW_SIZE = 8;
-    private  static  final int BOARD_COL_SIZE = 10;
-
     private final InputHandler inputHandler;
     private final OutputHandler outputHandler;
     private final GameBoard gameBoard;
-
-
-    private final BoardIndexConverter boardIndexConvert = new BoardIndexConverter();
     private  int gameStatus = 0; // 0: 게임 중, 1: 승리, -1: 패배
 
 
-    public MineSweeper(GameLevel gameLevel,InputHandler inputHandler ,OutputHandler outputHandler) {
-        gameBoard = new GameBoard(gameLevel);
-        this.inputHandler = inputHandler;
-        this.outputHandler = outputHandler;
+    public MineSweeper(GameConfig gameConfig) {
+        gameBoard = new GameBoard(gameConfig.getGameLevel());
+        this.inputHandler = gameConfig.getInputHandler();
+        this.outputHandler = gameConfig.getOutputHandler();
+
     }
+
 
     @Override
     public void initialize() {
+
         gameBoard.initializeGame();
     }
 
