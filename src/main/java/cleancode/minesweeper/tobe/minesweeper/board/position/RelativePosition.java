@@ -5,18 +5,17 @@ import java.util.Objects;
 
 public class RelativePosition {
 
+    public static final List<RelativePosition> SURROUNDED_POSITIONS = List.of(RelativePosition.of(-1, -1),
+            RelativePosition.of(-1, 0),
+            RelativePosition.of(-1, 1),
+            RelativePosition.of(0, -1),
+            RelativePosition.of(0, 1),
+            RelativePosition.of(1, -1),
+            RelativePosition.of(1, 0),
+            RelativePosition.of(1, 1)
+    );
     private final int deltaRow; // 변화량
     private final int deltaCol; //
-
-    public static final List<RelativePosition> SURROUNDED_POSITIONS = List.of(RelativePosition.of(-1,-1),
-            RelativePosition.of(-1,0),
-            RelativePosition.of(-1,1),
-            RelativePosition.of(0,-1),
-            RelativePosition.of(0,1),
-            RelativePosition.of(1,-1),
-            RelativePosition.of(1,0),
-            RelativePosition.of(1,1)
-    );
 
     //유효성 검증은 필요없음 어차피 음수가 나옴
     public RelativePosition(int deltaRow, int deltaCol) {
