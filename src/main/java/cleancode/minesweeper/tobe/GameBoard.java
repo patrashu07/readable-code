@@ -55,7 +55,7 @@ public class GameBoard {
 
         //for 문 stream으로 변경
         List<CellPosition> cellPositions = calculateSurroundedPositions(cellPosition, getRowSize(), getColSize());
-        cellPositions.forEach(this:: openSurroundedCells);
+        cellPositions.forEach(this::openSurroundedCells);
 
        /* for(RelativePosition relativePosition : RelativePosition.SURROUNDED_POSITIONS) {
             //새롭게 작성된 좐표
@@ -99,6 +99,12 @@ public class GameBoard {
         return cellPosition.isRowIndexMoreThanOrEqual(rowSize) || cellPosition.isColIndexMoreThanOrEqual(colSize);
     }
 
+    public CellSnapshot getSnapshot(CellPosition cellPosition) {
+        Cell cell = findCell(cellPosition);
+        return cell.getSnapshot();
+
+    }
+
     public void initializeGame() {
         CellPositions cellPositions = CellPositions.from(board);
 
@@ -114,23 +120,23 @@ public class GameBoard {
     }
 
     private void initializeNumberCelss(List<CellPosition> numberPositionCandidates) {
-        for(CellPosition candidatePosition : numberPositionCandidates) {
+        for (CellPosition candidatePosition : numberPositionCandidates) {
             int count = countNearbyLandMines(candidatePosition);
-            if(count != 0) {
-                updateCellAt(candidatePosition , new NumberCell(count));
+            if (count != 0) {
+                updateCellAt(candidatePosition, new NumberCell(count));
             }
         }
     }
 
     private void initializeLandMineCells(List<CellPosition> landMinePositions) {
-        for(CellPosition position : landMinePositions) {
+        for (CellPosition position : landMinePositions) {
             updateCellAt(position, new LandMineCell());
         }
     }
 
     private void initializeEmptyCells(CellPositions cellPositions) {
         List<CellPosition> allPositions = cellPositions.getPositions();
-        for(CellPosition position : allPositions) {
+        for (CellPosition position : allPositions) {
             updateCellAt(position, new EmptyCell());
         }
     }
@@ -144,7 +150,7 @@ public class GameBoard {
         return cell.getSign();
     }
 
-    public int getRowSize() {a1
+    public int getRowSize() {
         return board.length;
     }
 
