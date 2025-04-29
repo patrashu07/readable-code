@@ -3,7 +3,6 @@ package cleancode.minesweeper.tobe.position;
 import cleancode.minesweeper.tobe.cell.Cell;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,8 +10,7 @@ public class CellPositions {
 
     private final List<CellPosition> positions;
 
-
-    public CellPositions(List<CellPosition> positions) {
+    private CellPositions(List<CellPosition> positions) {
         this.positions = positions;
     }
 
@@ -32,32 +30,29 @@ public class CellPositions {
 
         return of(cellPositions);
     }
-    //항상 외부에서 참조할수 없게
-    public List<CellPosition> getPositions() {
-        return new ArrayList<>(positions);
-    }
 
     public List<CellPosition> extractRandomPositions(int count) {
         List<CellPosition> cellPositions = new ArrayList<>(positions);
 
-        Collections.shuffle(positions); // positions을 셔플하면
+        Collections.shuffle(cellPositions);
         return cellPositions.subList(0, count);
     }
 
-    public List<CellPosition> subStract(List<CellPosition> positionListToSubstract) {
+    public List<CellPosition> subtract(List<CellPosition> positionListToSubtract) {
         List<CellPosition> cellPositions = new ArrayList<>(positions);
-        CellPositions positionsToSubStract = CellPositions.of(positionListToSubstract);
-
+        CellPositions positionsToSubtract = CellPositions.of(positionListToSubtract);
 
         return cellPositions.stream()
-                .filter(positionsToSubStract::doesNotContain)
-                .toList();
-
+            .filter(positionsToSubtract::doesNotContain)
+            .toList();
     }
 
     private boolean doesNotContain(CellPosition position) {
         return !positions.contains(position);
     }
 
+    public List<CellPosition> getPositions() {
+        return new ArrayList<>(positions);
+    }
 
 }

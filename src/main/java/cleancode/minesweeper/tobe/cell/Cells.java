@@ -4,9 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Cells {
+
     private final List<Cell> cells;
 
-    private Cells (List<Cell> cells) {
+    private Cells(List<Cell> cells) {
         this.cells = cells;
     }
 
@@ -14,15 +15,16 @@ public class Cells {
         return new Cells(cells);
     }
 
-    public static Cells from(Cell[][] cells){
+    public static Cells from(Cell[][] cells) {
         List<Cell> cellList = Arrays.stream(cells)
                 .flatMap(Arrays::stream)
                 .toList();
         return of(cellList);
     }
 
-    public boolean isAllCheckedd() {
+    public boolean isAllChecked() {
         return cells.stream()
                 .allMatch(Cell::isChecked);
     }
+
 }
