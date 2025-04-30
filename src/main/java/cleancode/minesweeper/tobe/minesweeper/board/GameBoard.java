@@ -241,7 +241,6 @@ public class GameBoard {
       return;
     }
 
-    //openSurroundedCells(cellPosition);
     openSurroundedCells2(cellPosition);
     checkIfGameIsOver();
   }
