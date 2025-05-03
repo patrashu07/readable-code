@@ -57,11 +57,8 @@ public class StudyCafePass {
     return "";
   }
 
-  private static final Set<StudyCafePassType> LOCKER_TYPES = Set.of(StudyCafePassType.FIXED);
-
-
   public boolean cannotUserLocker() {
-    return !LOCKER_TYPES.contains(this.passType);
+    return this.passType.isLockerType();
   }
 
 
