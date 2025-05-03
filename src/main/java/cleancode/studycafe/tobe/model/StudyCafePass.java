@@ -8,5 +8,4 @@ public interface StudyCafePass {
 
   int getPrice();
 
-
 }
